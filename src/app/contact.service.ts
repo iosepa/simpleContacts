@@ -8,7 +8,7 @@ import {Contact } from './contact';
 })
 export class ContactService 
 {
-  serverURL = 'http://14d607be.ngrok.io/';
+  serverURL = 'https://14d607be.ngrok.io/';
   constructor(private http: HttpClient) { }
 
   getContacts()
