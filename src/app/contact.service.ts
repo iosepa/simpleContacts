@@ -8,25 +8,25 @@ import {Contact } from './contact';
 })
 export class ContactService 
 {
-
+  serverURL = 'http://14d607be.ngrok.io/';
   constructor(private http: HttpClient) { }
 
   getContacts()
   {
-    return this.http.get<any>('http://localhost:3000/api/contacts')
+    return this.http.get<any>(this.serverURL+'api/contacts')
   }
 
   addContact(newContact)
   {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post<any>('http://localhost:3000/api/contact', newContact, {headers: headers})
+    return this.http.post<any>(this.serverURL+'api/contact', newContact, {headers: headers})
     
   }
 
   deleteContact(id)
   {
-    return this.http.delete<any>('http://localhost:3000/api/contact/'+id)
+    return this.http.delete<any>(this.serverURL+'api/contact/'+id)
     
   }
 
@@ -34,7 +34,7 @@ export class ContactService
   {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.put<any>('http://localhost:3000/api/contact/'+id, contact, {headers: headers})
+    return this.http.put<any>(this.serverURL+'api/contact/'+id, contact, {headers: headers})
     
   }
 }
