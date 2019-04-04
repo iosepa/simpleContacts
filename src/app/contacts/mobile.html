@@ -1,0 +1,32 @@
+<nb-flip-card *ngFor="let contact of contacts">
+        <nb-card-front>
+          <nb-card>
+            <nb-card-header>{{contact.first_name}} {{contact.last_name}}</nb-card-header>
+            <nb-card-body>
+              {{contact.phone}}
+            </nb-card-body>
+          </nb-card>
+        </nb-card-front>
+        <nb-card-back>
+          <nb-card>
+            <nb-card-body>
+              <form [formGroup]="cForm" (ngSubmit)="createContact()">
+      
+                <input nbInput type="text" class="form-control" value={{contact.first_name}} formControlName="first_name"
+                  required>
+      
+                <input nbInput type="text" class="form-control" value={{contact.last_name}} formControlName="last_name" required>
+      
+                <input nbInput type="text" class="form-control" value={{contact.phone}} formControlName="phone" required>
+      
+                <button id="updateBt" nbButton outline status="info" shape="round" size="xsmall" type="submit"
+                  (click)="updateContact(contact._id)">Update</button> 
+      
+                </form>
+                <button id="deleteBt" nbButton outline status="danger" shape="round" size="xsmall"
+                (click)="deleteContact(contact._id)">Delete</button>
+      
+            </nb-card-body>
+          </nb-card>
+        </nb-card-back>
+      </nb-flip-card>

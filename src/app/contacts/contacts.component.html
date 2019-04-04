@@ -1,0 +1,80 @@
+<nb-sidebar>
+
+  <button id="newForm" nbButton outline status="success" shape="round" size="xsmall" (click)="showNewForm()">New
+    Contact</button>
+  <nb-list>
+    <nb-list-item *ngFor="let contact of contacts" (click)="showContactDets(contact._id)"
+      [ngClass]="{'highlighted' : currentContact == contact}">
+      <nb-user name="{{contact.first_name}} {{contact.last_name}}" title={{phone}}></nb-user>
+    </nb-list-item>
+  </nb-list>
+</nb-sidebar>
+<div class="container" [ngClass]="{'toggledC' : toggled}">
+  <a id="menuToggle" href="#" (click)="toggle()"><i class="fa fa-chevron-left" [ngClass]="{'fa-rotate-180':toggled}"></i></a>
+
+  <nb-card *ngIf="showForm">
+    <nb-card-body>
+      <form [formGroup]="cForm" (ngSubmit)="createContact();">
+
+        <input nbInput type="text" [ngClass]="{'input-success':cForm.controls.first_name.valid, 
+        'input-warning':cForm.controls.first_name.invalid && cForm.controls.first_name.touched}" class="form-control"
+          placeholder="First Name" formControlName="first_name" required>
+
+        <input nbInput type="text" [ngClass]="{'input-success':cForm.controls.last_name.valid, 
+        'input-warning':cForm.controls.last_name.invalid && cForm.controls.last_name.touched}" class="form-control"
+          placeholder="Last Name" formControlName="last_name" required>
+
+        <input nbInput type="text" class="form-control" placeholder="Phone" formControlName="phone" required>
+
+        <button id="createBt" nbButton outline status="info" shape="round" size="small" type="submit">Create</button>
+
+      </form>
+
+
+
+
+    </nb-card-body>
+  </nb-card>
+
+  <nb-reveal-card *ngIf="!showForm && currentContact" [showToggleButton]="false" [revealed]="revealed">
+    <nb-card-front>
+      <nb-card>
+        <nb-card-header>{{currentContact.first_name}} {{currentContact.last_name}}</nb-card-header>
+        <nb-card-body>
+          {{currentContact.phone}}
+        </nb-card-body><i class="revealButton fa fa-chevron-up" (click)="toggleView()"></i>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      <nb-card>
+        <nb-card-body>
+          <form [formGroup]="uForm" (ngSubmit)="updateContact(currentContact._id)">
+
+            <input nbInput type="text" class="form-control" [ngClass]="{'input-success':uForm.controls.first_name.valid, 
+            'input-warning':uForm.controls.first_name.invalid && uForm.controls.first_name.touched}"
+              value={{currentContact.first_name}} formControlName="first_name" required>
+
+            <input nbInput type="text" class="form-control" [ngClass]="{'input-success':uForm.controls.last_name.valid, 
+            'input-warning':uForm.controls.last_name.invalid && uForm.controls.last_name.touched}"
+              value={{currentContact.last_name}} formControlName="last_name" required>
+
+            <input nbInput type="text" class="form-control" value={{currentContact.phone}} formControlName="phone"
+              required>
+
+            <button id="updateBt" nbButton outline status="info" shape="round" size="small"
+              type="submit">Update</button>
+
+          </form>
+          <button id="deleteBt" nbButton outline status="danger" shape="round" size="xsmall"
+            (click)="deleteContact(currentContact._id)">Delete</button>
+
+        </nb-card-body><i class="revealButton fa fa-chevron-down" (click)="toggleView()"></i>
+      </nb-card>
+    </nb-card-back>
+  </nb-reveal-card>
+
+
+
+  <div id="by">by: <a href="https://iosepa.io"> iosepa.io</a>
+  </div>
+</div>
